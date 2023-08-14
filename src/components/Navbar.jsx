@@ -9,14 +9,32 @@ import {
     MenuList,
     MenuItem,
     useColorModeValue,
+    useDisclosure,
 } from '@chakra-ui/react'
 import { useAuth } from '../contexts/AuthContext'
 import LoginModal from './LoginModal'
 import ImageUpload from './UploadImage'
 import { Link } from 'react-router-dom'
+import RegisterModal from './RegisterModal'
 
 export default function Navbar() {
     const { user, isLoggedIn, logout } = useAuth();
+    
+    const {
+        isOpen: isOpenRegister,
+        onOpen: onOpenRegister,
+        onClose: onCloseRegister
+    } = useDisclosure();
+    const {
+        isOpen: isOpenAlert,
+        onOpen: onOpenAlert,
+        onClose: onCloseAlert
+    } = useDisclosure();
+    const {
+        isOpen: isOpenLogin,
+        onOpen: onOpenLogin,
+        onClose: onCloseLogin
+    } = useDisclosure();
 
     return (
         <>
@@ -45,7 +63,6 @@ export default function Navbar() {
                                     />
                                 </MenuButton>
                                 <MenuList>
-
                                     <ImageUpload />
                                     <MenuItem onClick={logout}>
                                         Log Out
@@ -53,7 +70,19 @@ export default function Navbar() {
                                 </MenuList>
                             </Menu>
                         ) : (
-                            <LoginModal />
+                            <>
+                                <Button onClick={onOpenLogin}>Log In</Button>
+                                <LoginModal isOpen={isOpenLogin} onClose={onCloseLogin} />
+                                <Button onClick={onOpenRegister}>Sign up</Button>
+                                <RegisterModal
+                                    isOpenRegister={isOpenRegister}
+                                    onCloseRegister={onCloseRegister}
+                                    isOpenAlert={isOpenAlert}
+                                    onOpenAlert={onOpenAlert}
+                                    onCloseAlert={onCloseAlert}
+                                    onOpenLogin={onOpenLogin}
+                                />
+                            </>
                         )}
 
 

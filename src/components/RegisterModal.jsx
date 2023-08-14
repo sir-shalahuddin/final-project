@@ -8,47 +8,46 @@ import {
     ModalCloseButton,
     ModalHeader,
     ModalBody,
+    ModalFooter,
     FormControl,
     FormLabel,
     Input,
     Stack,
     Alert,
     AlertTitle,
-    AlertIcon
+    AlertIcon,
+    Center,
+    Flex
 } from '@chakra-ui/react'
 import { useRef, useState } from 'react'
-import { useAuth } from '../contexts/AuthContext';
-import fetchUserData from '../services/User';
+import { CheckCircleIcon } from '@chakra-ui/icons'
 import PropTypes from 'prop-types';
 
-export default function LoginModal({ isOpen, onClose }) {
 
-    const { login } = useAuth();
+export default function RegisterModal({ isOpenRegister, onCloseRegister, isOpenAlert, onOpenAlert, onCloseAlert, onOpenLogin }) {
     const [form, setForm] = useState({
         email: "",
-        password: ""
+        password: "",
+        username: ""
     });
 
     const [errorMessage, setErrorMessage] = useState(null);
 
     const initialRef = useRef(null)
 
-    async function loginService({ email, password }) {
+    async function registerService({ email, password, username }) {
         try {
-            const response = await fetch(import.meta.env.VITE_HOST + "/login", {
+            const response = await fetch(import.meta.env.VITE_HOST + '/register', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, username }),
             });
 
             if (response.ok) {
-                const data = await response.json()
-                const newToken = data.token
-                const user = await fetchUserData(newToken);
-                login(user, newToken);
-                onClose();
+                onCloseRegister();
+                onOpenAlert();
             }
             else {
                 const data = await response.json()
@@ -56,16 +55,15 @@ export default function LoginModal({ isOpen, onClose }) {
 
             }
         } catch (error) {
-            console.error("Error during login:", error);
+            return error;
         }
 
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const error = await loginService(form);
+        const error = await registerService(form);
         setErrorMessage(error)
-
     }
 
     const handleForm = e => {
@@ -74,7 +72,7 @@ export default function LoginModal({ isOpen, onClose }) {
     }
 
     const handleCloseModal = () => {
-        onClose()
+        onCloseRegister()
         setErrorMessage(null)
     }
 
@@ -84,12 +82,12 @@ export default function LoginModal({ isOpen, onClose }) {
 
             <Modal
                 initialFocusRef={initialRef}
-                isOpen={isOpen}
+                isOpen={isOpenRegister}
                 onClose={handleCloseModal}
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Login First</ModalHeader>
+                    <ModalHeader>Sign Up First</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <Box
@@ -102,15 +100,13 @@ export default function LoginModal({ isOpen, onClose }) {
                                     <FormLabel >Email address</FormLabel>
                                     <Input ref={initialRef} type="email" />
                                 </FormControl>
+                                <FormControl value={form.username} onChange={handleForm} id="username">
+                                    <FormLabel >Username</FormLabel>
+                                    <Input type="text" />
+                                </FormControl>
                                 <FormControl value={form.password} onChange={handleForm} id="password">
                                     <FormLabel>Password</FormLabel>
-                                    <Input
-                                        type="password"
-                                        onKeyPress={(e) => {
-                                            if (e.key === 'Enter' && !e.shiftKey) {
-                                                handleSubmit(e);
-                                            }
-                                        }} />
+                                    <Input type="password" />
                                 </FormControl>
                                 {errorMessage &&
                                     <Alert status='error'>
@@ -125,18 +121,54 @@ export default function LoginModal({ isOpen, onClose }) {
                                     _hover={{
                                         bg: 'blue.500',
                                     }}>
-                                    Sign in
+                                    Sign up
                                 </Button>
                             </Stack>
                         </Box>
                     </ModalBody>
                 </ModalContent>
             </Modal>
+
+            <Modal
+                isOpen={isOpenAlert}
+                onClose={onCloseAlert}
+            >
+                <ModalContent>
+                    <ModalHeader>Sign Up Succes</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Center py={10}>
+                            <CheckCircleIcon color="green" boxSize={10} />
+                        </Center>
+
+                    </ModalBody>
+                    <ModalFooter >
+                        <Flex justifyContent="center">
+                            <Button
+                                onClick={() => {
+                                    onCloseAlert();
+                                    onOpenLogin();
+                                }}
+                                bg={'blue.400'}
+                                color={'white'}
+                                _hover={{
+                                    bg: 'blue.500',
+                                }}>
+                                Please Login First
+                            </Button>
+                        </Flex>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }
 
-LoginModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
+RegisterModal.propTypes = {
+    isOpenRegister: PropTypes.bool.isRequired,
+    onCloseRegister: PropTypes.func.isRequired,
+    isOpenAlert: PropTypes.bool.isRequired,
+    onOpenAlert: PropTypes.func.isRequired,
+    onCloseAlert: PropTypes.func.isRequired,
+    onOpenLogin: PropTypes.func.isRequired,
 };

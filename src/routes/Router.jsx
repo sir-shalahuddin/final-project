@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/home/Home";
-import VideoDetail from "./pages/video/VideoDetail";
+import Navbar from "../components/Navbar";
+import Home from "../pages/home/Home";
+import VideoDetail from "../pages/video/VideoDetail";
 function AppRouter() {
 
     return (

@@ -32,7 +32,7 @@ const ImageUpload = () => {
             setIsUploading(true);
 
             try {
-                const response = await fetch('http://localhost:3000/users/profile-pictures', {
+                const response = await fetch(import.meta.env.VITE_HOST + '/users/profile-pictures', {
                     method: 'PUT',
                     headers: {
                         Authorization: `Bearer ${token}`,

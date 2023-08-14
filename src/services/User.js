@@ -1,6 +1,6 @@
 export default async function fetchUserData(token) {
     try {
-        const response = await fetch("http://localhost:3000/users", {
+        const response = await fetch(import.meta.env.VITE_HOST + "/users", {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,
