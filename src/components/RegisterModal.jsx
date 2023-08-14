@@ -106,7 +106,13 @@ export default function RegisterModal({ isOpenRegister, onCloseRegister, isOpenA
                                 </FormControl>
                                 <FormControl value={form.password} onChange={handleForm} id="password">
                                     <FormLabel>Password</FormLabel>
-                                    <Input type="password" />
+                                    <Input
+                                        type="password"
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter' && !e.shiftKey) {
+                                                handleSubmit(e);
+                                            }
+                                        }} />
                                 </FormControl>
                                 {errorMessage &&
                                     <Alert status='error'>
