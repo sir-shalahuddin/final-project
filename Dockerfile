@@ -1,22 +1,32 @@
-FROM node:18-alpine as BUILD_IMAGE
-WORKDIR /home/node/app
+# Use a Node.js image as the base
+FROM node:18-alpine AS build
 
-COPY package.json . 
+# Set the working directory
+WORKDIR /app
 
+# Copy package.json and yarn.lock to the working directory
+COPY package.json ./
+
+# Install dependencies using Yarn
 RUN yarn install
 
-COPY . . 
+# Copy the rest of the app's source code to the working directory
+COPY . .
 
+# Build the app
 RUN yarn build
 
-FROM node:18-alpine as PROD_IMAGE
-WORKDIR /home/node/app
+# Use a lighter-weight image to serve the app
+FROM node:18-alpine
 
-COPY --from=BUILD_IMAGE /home/node/app/dist/ /home/node/app/dist/
+# Set the working directory
+WORKDIR /app
 
-COPY package.json . 
-COPY vite.config.js .
+# Copy the built app from the previous stage
+COPY --from=build /app/dist /app
 
+# Expose port 8080
 EXPOSE 8080
 
-CMD [ "yarn", "preview" ]
+# Command to run the app
+CMD ["npx", "serve", "-s", "-l", "8080"]
