@@ -11,6 +11,7 @@ export default function ProductDetail({ data }) {
             overflow='hidden'
         >
             <CardHeader
+                maxW={70}
                 p={2}
                 display="flex"
                 alignItems="center"

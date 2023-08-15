@@ -1,5 +1,5 @@
 # Use a Node.js image as the base
-FROM node:latest AS build
+FROM node:18-alpine AS build
 
 # Set the working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN yarn build
 
 # Use a lighter-weight image to serve the app
-FROM node:latest
+FROM node:18-alpine
 
 # Set the working directory
 WORKDIR /app
