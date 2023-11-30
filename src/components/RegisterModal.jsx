@@ -46,6 +46,11 @@ export default function RegisterModal({ isOpenRegister, onCloseRegister, isOpenA
             });
 
             if (response.ok) {
+                setForm({
+                    email: "",
+                    password: "",
+                    username: ""
+                })
                 onCloseRegister();
                 onOpenAlert();
             }
