@@ -25,6 +25,10 @@ WORKDIR /app
 # Copy the built app from the previous stage
 COPY --from=build /app/dist /app
 
+# Set environment variables
+ENV VITE_HOST=https://midterm-2itxykb6ra-et.a.run.app
+ENV VITE_WS_HOST=ws://midterm-2itxykb6ra-et.a.run.app
+
 # Expose port 8080
 EXPOSE 8080
 
