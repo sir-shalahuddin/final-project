@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Set environment variables
 ENV VITE_HOST=https://midterm-2itxykb6ra-et.a.run.app
-ENV VITE_WS_HOST=ws://midterm-2itxykb6ra-et.a.run.app
+ENV VITE_WS_HOST=wss://midterm-2itxykb6ra-et.a.run.app
 
 # Copy package.json and yarn.lock to the working directory
 COPY package.json ./
