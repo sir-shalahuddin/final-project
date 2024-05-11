@@ -8,8 +8,9 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    useColorModeValue,
     useDisclosure,
+    ButtonGroup,
+    Heading
 } from '@chakra-ui/react'
 import { useAuth } from '../contexts/AuthContext'
 import LoginModal from './LoginModal'
@@ -19,7 +20,7 @@ import RegisterModal from './RegisterModal'
 
 export default function Navbar() {
     const { user, isLoggedIn, logout } = useAuth();
-    
+
     const {
         isOpen: isOpenRegister,
         onOpen: onOpenRegister,
@@ -38,10 +39,14 @@ export default function Navbar() {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box bg={'#7AB2B2'} px={4} borderRadius={8}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <Link to="/">
-                        <Box>Tokopedia Play</Box>
+                        <Box>
+                            <Heading size='lg' >
+                                Tokopedia Play
+                            </Heading>
+                        </Box>
                     </Link>
                     <Flex alignItems={'center'}>
                         {isLoggedIn ? (
@@ -71,9 +76,11 @@ export default function Navbar() {
                             </Menu>
                         ) : (
                             <>
-                                <Button onClick={onOpenLogin}>Log In</Button>
-                                <LoginModal isOpen={isOpenLogin} onClose={onCloseLogin} />
-                                <Button onClick={onOpenRegister}>Sign up</Button>
+                                <ButtonGroup spacing='2' >
+                                    <Button bgColor='EEF7FF' onClick={onOpenLogin}>Log In</Button>
+                                    <LoginModal isOpen={isOpenLogin} onClose={onCloseLogin} />
+                                    <Button bgColor='EEF7FF' onClick={onOpenRegister}>Sign up</Button>
+                                </ButtonGroup>
                                 <RegisterModal
                                     isOpenRegister={isOpenRegister}
                                     onCloseRegister={onCloseRegister}
@@ -84,8 +91,6 @@ export default function Navbar() {
                                 />
                             </>
                         )}
-
-
                     </Flex>
                 </Flex>
             </Box>

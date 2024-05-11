@@ -4,7 +4,8 @@ import {
     CardHeader,
     CardBody,
     CardFooter,
-    Text
+    Text,
+    Heading
 } from '@chakra-ui/react'
 import useFetch from '../../../hooks/useFetch'
 import { useParams } from 'react-router-dom'
@@ -82,11 +83,12 @@ export default function CommentList() {
     return (
         <>
             <Card textAlign="left" flex={1}>
-                <CardHeader>
-                    <Text>Komentar Teratas</Text>
+                <CardHeader bgColor='#4D869C' borderTopLeftRadius="8" borderTopRightRadius="8" >
+                    <Heading size='sm'>Komentar Teratas</Heading>
                 </CardHeader>
                 <CardBody
                     overflowY='scroll'
+                    backgroundColor='#EEF7FF'
                 >
                     {data && data.data.map((comment, index) => (
                         <Box pb={2} key={comment.id ? comment.id : generateRandomString(10)}>

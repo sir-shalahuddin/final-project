@@ -1,4 +1,4 @@
-import { Spinner, Center, Image, Card, CardHeader, CardBody, Text } from '@chakra-ui/react'
+import { Spinner, Center, Image, Card, Box, CardBody, CardFooter, Text, Button, ButtonGroup } from '@chakra-ui/react'
 import useImageLoad from '../../../hooks/useImageLoad';
 import PropTypes from 'prop-types';
 
@@ -7,35 +7,37 @@ export default function ProductDetail({ data }) {
     return <>
         <Card
             key={data.product_id}
-            direction={{ base: 'column', sm: 'row' }}
-            overflow='hidden'
+            backgroundColor='#EEF7FF'
         >
-            <CardHeader
-                maxW={70}
-                p={2}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-            >
-                {imageLoaded ?
-                    <Image src={data.link_product}></Image>
-                    :
-                    <Center>
-                        <Spinner />
-                    </Center>
-                }
-
-            </CardHeader>
-            <CardBody
-                pl={0}
-            >
-                <Text noOfLines={1}>
-                    {data.title}
-                </Text>
-                <Text>
-                    Rp {data.price}
-                </Text>
+            <CardBody pl={0} pb={0} display="flex" alignItems="center" justifyContent="center">
+                <Box px={2} py={0} >
+                    {imageLoaded ?
+                        <Image maxW={70} src={data.link_product}></Image>
+                        :
+                        <Center>
+                            <Spinner />
+                        </Center>
+                    }
+                </Box>
+                <Box direction='column'>
+                    <Text noOfLines={1}>
+                        {data.title}
+                    </Text>
+                    <Text as='b'>
+                        Rp{data.price}
+                    </Text>
+                </Box>
             </CardBody>
+            <CardFooter>
+                <ButtonGroup>
+                    <Button size='xs' variant='solid' colorScheme='blue'>
+                        Buy now
+                    </Button>
+                    <Button size='xs' variant='ghost' colorScheme='blue'>
+                        Add to cart
+                    </Button>
+                </ButtonGroup>
+            </CardFooter>
         </Card>
         <br />
     </>;

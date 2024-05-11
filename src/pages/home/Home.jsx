@@ -36,7 +36,7 @@ export default function Home() {
 
     return (
         <>
-            <Input my={[1, 2, 4]} placeholder='Search' onChange={handleQuery} />
+            <Input bgColor='#EEF7FF' my={[1, 2, 4]} placeholder='Search' onChange={handleQuery} />
             {!query &&
                 <Wrap display="flex" justifyContent="center" alignItems="center" pb={[1, 2, 4]} spacing={1}>
                     {['All', 'Live', 'Explore', 'Promo', 'Official Store', 'Tips & Rekomendasi', 'Terbaru', 'Upcoming'].map((key, i) => (
