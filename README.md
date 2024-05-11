@@ -1,7 +1,7 @@
 # Tokopedia Play Clone
 Final project on generasih gigih 3.0. Imitate [Tokopedia Play](https://www.tokopedia.com/play/channels) develop with MERN(Mongo Express React NodeJs) Stack. 
 
-Live preview : [Tokopedia Play](https://gigih-fe-siraj-7yy56eqnyq-et.a.run.app/) 
+Live preview : [Tokopedia Play](https://final-project-2itxykb6ra-et.a.run.app/) 
 
 note: *please wait for booting the container for a while when accesing app first time*
 
